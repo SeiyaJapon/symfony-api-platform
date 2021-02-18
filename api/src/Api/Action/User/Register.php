@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Api\Action;
+namespace App\Api\Action\User;
 
 use App\Entity\User;
 use App\Service\User\UserRegisterService;
