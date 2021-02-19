@@ -18,4 +18,4 @@ framework:
                             binding_keys: [user_queue]
                     auto_setup: true
         routing:
-            'App\Messenger\Message\UserRegisteredMessage'
+            'App\Messenger\Message\UserRegisteredMessage': amqp_user

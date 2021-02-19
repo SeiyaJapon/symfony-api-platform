@@ -12,6 +12,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\MappingException;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 
 abstract class BaseRepository
@@ -98,7 +99,7 @@ abstract class BaseRepository
     abstract protected static function entityClass() : string;
 
     /**
-     * @return ObjectRepository|EntityManager
+     * @return ManagerRegistry|ObjectManager
      */
     private function getEntityManager()
     {
