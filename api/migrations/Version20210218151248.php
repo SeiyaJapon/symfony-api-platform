@@ -23,7 +23,7 @@ final class Version20210218151248 extends AbstractMigration
             CREATE TABLE `user` (
                 id VARCHAR(36) NOT NULL PRIMARY KEY,
                 name VARCHAR(100) NOT NULL,
-                email VARCHAR(100) NOT NULL,
+                email VARCHAR(100) NOT NULL UNIQUE,
                 password VARCHAR(100) DEFAULT NULL,
                 avatar VARCHAR(255) DEFAULT NULL,
                 token VARCHAR(100) DEFAULT NULL,
