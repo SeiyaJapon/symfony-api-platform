@@ -12,6 +12,7 @@ class JsonExceptionResponseTransformerListerer
 {
     public function onKernelException(ExceptionEvent $event) : void
     {
+        $data = [];
         $exception = $event->getThrowable();
 
         if ($exception instanceof HttpExceptionInterface) {

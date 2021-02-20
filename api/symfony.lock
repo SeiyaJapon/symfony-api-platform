@@ -92,6 +92,9 @@
     "doctrine/persistence": {
         "version": "2.1.0"
     },
+    "doctrine/reflection": {
+        "version": "1.2.2"
+    },
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
@@ -349,9 +352,6 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.22.1"
     },
-    "symfony/polyfill-php56": {
-        "version": "v1.20.0"
-    },
     "symfony/polyfill-php73": {
         "version": "v1.22.1"
     },
@@ -365,9 +365,6 @@
         "version": "v5.2.3"
     },
     "symfony/property-info": {
-        "version": "v5.2.3"
-    },
-    "symfony/proxy-manager-bridge": {
         "version": "v5.2.3"
     },
     "symfony/redis-messenger": {

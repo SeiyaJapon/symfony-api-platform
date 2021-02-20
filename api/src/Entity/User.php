@@ -34,12 +34,12 @@ class User implements UserInterface
         $this->markAsUpdated();
     }
 
-    public function id(): string
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function name(): string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -49,7 +49,7 @@ class User implements UserInterface
         $this->name = $name;
     }
 
-    public function email(): string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -63,7 +63,7 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    public function password(): ?string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -73,7 +73,7 @@ class User implements UserInterface
         $this->password = $password;
     }
 
-    public function avatar(): ?string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }
@@ -83,7 +83,7 @@ class User implements UserInterface
         $this->avatar = $avatar;
     }
 
-    public function token(): ?string
+    public function getToken(): ?string
     {
         return $this->token;
     }
@@ -93,7 +93,7 @@ class User implements UserInterface
         $this->token = $token;
     }
 
-    public function resetPasswordToken(): ?string
+    public function getResetPasswordToken(): ?string
     {
         return $this->resetPasswordToken;
     }
@@ -113,7 +113,7 @@ class User implements UserInterface
         $this->active = $active;
     }
 
-    public function createdAt(): \DateTime
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
@@ -132,10 +132,6 @@ class User implements UserInterface
     public function getRoles()
     {
         return [];
-    }
-
-    public function getPassword() : void
-    {
     }
 
     public function getSalt() : void

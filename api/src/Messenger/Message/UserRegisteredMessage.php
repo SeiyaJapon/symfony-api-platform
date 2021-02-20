@@ -22,7 +22,7 @@ class UserRegisteredMessage
     /**
      * @return string
      */
-    public function id(): string
+    public function getId(): string
     {
         return $this->id;
     }
@@ -30,7 +30,7 @@ class UserRegisteredMessage
     /**
      * @return string
      */
-    public function name(): string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -38,7 +38,7 @@ class UserRegisteredMessage
     /**
      * @return string
      */
-    public function email(): string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -46,7 +46,7 @@ class UserRegisteredMessage
     /**
      * @return string
      */
-    public function token(): string
+    public function getToken(): string
     {
         return $this->token;
     }
