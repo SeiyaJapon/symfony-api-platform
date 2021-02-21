@@ -13,7 +13,7 @@ framework:
                 retry_strategy:
                     max_retries: 1
                     delay: 1000
-                    multiplayer: 1
+                    multiplier: 1
                 options:
                     vhost: '%env(MESSENGER_VHOST)%'
                     exchange:
@@ -26,4 +26,4 @@ framework:
             failed:
                 dsn: 'doctrine://default?queue_name=failed'
         routing:
-            'Mailer\Messenger\Message\UserRegisteredMessage': amqp_
+            'Mailer\Messenger\Message\UserRegisteredMessage': amqp_user
