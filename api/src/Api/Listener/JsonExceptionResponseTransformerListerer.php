@@ -12,7 +12,6 @@ class JsonExceptionResponseTransformerListerer
 {
     public function onKernelException(ExceptionEvent $event) : void
     {
-        $data = [];
         $exception = $event->getThrowable();
 
         if ($exception instanceof HttpExceptionInterface) {
@@ -21,9 +20,9 @@ class JsonExceptionResponseTransformerListerer
                 'code' => $exception->getStatusCode(),
                 'message' => $exception->getMessage()
             ];
-        }
 
-        $event->setResponse($this->prepareResponse($data, $data['code']));
+            $event->setResponse($this->prepareResponse($data, $data['code']));
+        }
     }
 
     private function prepareResponse(array $data, int $statusCode) : JsonResponse
