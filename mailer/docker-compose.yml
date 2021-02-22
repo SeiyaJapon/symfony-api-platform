@@ -46,6 +46,8 @@ services:
       - 1025:1025
     depends_on:
       - symfony-api-platform-mailer-db
+    networks:
+      - symfony-api-platform-network
 
 volumes:
   symfony-api-platform-mailer-db-data:
