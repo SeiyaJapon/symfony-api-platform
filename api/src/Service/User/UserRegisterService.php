@@ -51,14 +51,14 @@ class UserRegisterService
         } catch (\Exception $exception) {
             UserAlreadyExistException::fromEmail($email);
         }
-$aux = new UserRegisteredMessage(
+
+        $this->messageBus->dispatch(
+            new UserRegisteredMessage(
                 $user->getId(),
                 $user->getName(),
                 $user->getEmail(),
                 $user->getToken()
-            );
-        $this->messageBus->dispatch(
-            $aux,
+            ),
             [new AmqpStamp(RoutingKey::USER_QUEUE)]
         );
 
