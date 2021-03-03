@@ -14,11 +14,11 @@ security:
             security: false
         resend_activation_email:
             pattern: ^/api/v1/users/resend_activation_email
-            method: [POST]
+            methods: [POST]
             security: false
         docs:
-            patter: ^/api/v1/docs
-            method: [GET]
+            pattern: ^/api/v1/docs
+            methods: [GET]
             security: false
         login:
             pattern: /api/v1/users/login
@@ -28,8 +28,14 @@ security:
             json_login:
                 check_path: /api/v1/users/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
-                failer_handler: lexik_jwt_authentication.handler.authentication_failure
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+        api:
+            pattern: ^/api/v1
+            stateless: true
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api/v1, roles: IS_AUTHENTICATED_FULLY }
