@@ -10,6 +10,7 @@ class UserNotFoundException extends NotFoundHttpException
 {
     private const MESSAGE_EMAIL = 'User with email %s not found';
     private const MESSAGE_ID_TOKEN = 'User with id %s and token %s not found';
+    private const MESSAGE_ID_RESET_PASSWORD_TOKEN = 'User with id %s and reset password token %s not found';
 
     public static function fromEmail(string $email) : self
     {
@@ -19,5 +20,10 @@ class UserNotFoundException extends NotFoundHttpException
     public static function fromUserIdAndToken(string $id, string $token) : self
     {
         throw new self(sprintf(self::MESSAGE_ID_TOKEN, $id, $token));
+    }
+
+    public static function fromUserIdAndResetPasswordToken(string $id, string $resetPasswordToken) : self
+    {
+        throw new self(sprintf(self::MESSAGE_ID_TOKEN, $id, $resetPasswordToken));
     }
 }
