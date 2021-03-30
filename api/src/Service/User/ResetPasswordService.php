@@ -8,10 +8,8 @@ namespace App\Service\User;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\Password\EncoderService;
-use App\Service\Request\RequestService;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Symfony\Component\HttpFoundation\Request;
 
 class ResetPasswordService
 {
@@ -27,17 +25,15 @@ class ResetPasswordService
     }
 
     /**
-     * @param Request $request
+     * @param string $userId
+     * @param string $resetPasswordToken
+     * @param string $password
      * @return User
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function reset(Request $request) : User
+    public function reset(string $userId, string $resetPasswordToken, string $password) : User
     {
-        $userId = RequestService::getField($request, 'userId');
-        $resetPasswordToken = RequestService::getField($request, 'resetPasswordToken');
-        $password = RequestService::getField($request, 'password');
-
         $user = $this->userRepository->findOneByIdAndResetPasswordToken($userId, $resetPasswordToken);
 
         $user->setPassword($this->encoderService->generateEncodedPassword($user, $password));
