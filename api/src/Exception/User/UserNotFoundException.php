@@ -8,10 +8,10 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserNotFoundException extends NotFoundHttpException
 {
-    private const MESSAGE_EMAIL = 'User with email %s not found';
-    private const MESSAGE_ID_TOKEN = 'User with id %s and token %s not found';
-    private const MESSAGE_ID_RESET_PASSWORD_TOKEN = 'User with id %s and reset password token %s not found';
-    private const MESSAGE_ID = 'User with id %s not found';
+    public const MESSAGE_EMAIL = 'User with email %s not found';
+    public const MESSAGE_ID_TOKEN = 'User with id %s and token %s not found';
+    public const MESSAGE_ID_RESET_PASSWORD_TOKEN = 'User with id %s and reset password token %s not found';
+    public const MESSAGE_ID = 'User with id %s not found';
 
     public static function fromEmail(string $email) : self
     {
