@@ -77,10 +77,30 @@ class TestBase extends WebTestCase
      * @throws Exception
      * @throws \Doctrine\DBAL\Driver\Exception
      */
+    protected function getPeterGroupId()
+    {
+        return $this->initDbConnection()->executeQuery('SELECT id FROM user_group WHERE name = "Peter Group"')->fetchOne();
+    }
+
+    /**
+     * @return false|mixed
+     * @throws Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
     protected function getManoloId()
     {
         return $this->initDbConnection()->executeQuery('SELECT id FROM user WHERE email = "manolo@api.com"')->fetchOne();
         // return $this->initDbConnection()->query('SELECT id FROM user WHERE email = "manolo@api.com"')->fetchColumn(0);
+    }
+
+    /**
+     * @return false|mixed
+     * @throws Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    protected function getManoloGroupId()
+    {
+        return $this->initDbConnection()->executeQuery('SELECT id FROM user_group WHERE name = "Manolo Group"')->fetchOne();
     }
 
     private function createAuthenticateUser(KernelBrowser &$client, string $email): void
