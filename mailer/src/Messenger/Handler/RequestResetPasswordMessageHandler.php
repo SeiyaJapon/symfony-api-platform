@@ -25,7 +25,6 @@ class RequestResetPasswordMessageHandler implements MessageHandlerInterface
 
     public function __invoke(RequestResetPasswordMessage $message) : void
     {
-
         $payload = [
             'url' => sprintf(
                 '%s%s?uid=%s&rpt=%s',

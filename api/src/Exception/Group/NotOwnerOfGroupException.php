@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Exception\Group;
+
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
+class NotOwnerOfGroupException extends AccessDeniedHttpException
+{
+    public const MESSAGE = 'You are not the owner of this group';
+
+    public function __construct()
+    {
+        parent::__construct(self::MESSAGE);
+    }
+}

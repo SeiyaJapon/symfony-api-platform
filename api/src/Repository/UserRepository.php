@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
-    public function findOneById(string $id) : User
+    public function findOneByIdOrFail(string $id) : User
     {
         if (null === $user = $this->objectRepository->find($id))
         {
