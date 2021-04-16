@@ -84,6 +84,26 @@ class TestBase extends WebTestCase
 
     /**
      * @return false|mixed
+     *
+     * @throws DBALException
+     */
+    protected function getPeterExpenseCategoryId()
+    {
+        return $this->initDbConnection()->query('SELECT id FROM category WHERE name = "Peter Expense Category"')->fetchColumn(0);
+    }
+
+    /**
+     * @return false|mixed
+     *
+     * @throws DBALException
+     */
+    protected function getPeterGroupExpenseCategoryId()
+    {
+        return $this->initDbConnection()->query('SELECT id FROM category WHERE name = "Peter Group Expense Category"')->fetchColumn(0);
+    }
+
+    /**
+     * @return false|mixed
      * @throws Exception
      * @throws \Doctrine\DBAL\Driver\Exception
      */
@@ -101,6 +121,26 @@ class TestBase extends WebTestCase
     protected function getManoloGroupId()
     {
         return $this->initDbConnection()->executeQuery('SELECT id FROM user_group WHERE name = "Manolo Group"')->fetchOne();
+    }
+
+    /**
+     * @return false|mixed
+     *
+     * @throws DBALException
+     */
+    protected function getManoloExpenseCategoryId()
+    {
+        return $this->initDbConnection()->query('SELECT id FROM category WHERE name = "Manolo Expense Category"')->fetchColumn(0);
+    }
+
+    /**
+     * @return false|mixed
+     *
+     * @throws DBALException
+     */
+    protected function getManoloGroupExpenseCategoryId()
+    {
+        return $this->initDbConnection()->query('SELECT id FROM category WHERE name = "Manolo Group Expense Category"')->fetchColumn(0);
     }
 
     private function createAuthenticateUser(KernelBrowser &$client, string $email): void

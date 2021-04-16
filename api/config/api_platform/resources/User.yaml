@@ -17,7 +17,7 @@ App\Entity\User:
       controller: App\Api\Action\User\ResendActivationEmail
       deserialize: false
       openapi_context:
-        summary: Send activation email inactive user
+        summary: Sends activation email to inactive user
         requestBody:
           content:
             application/json:
@@ -39,7 +39,7 @@ App\Entity\User:
                       type: string
     login:
       method: POST
-      path: api_login_check
+      route_name: api_login_check
       openapi_context:
         summary: Login a user in the API
         requestBody:
@@ -183,7 +183,7 @@ App\Entity\User:
       controller: App\Api\Action\User\ChangePassword
       deserialize: false
       openapi_context:
-        summary: Change user password
+        summary: Changes user password
         requestBody:
           content:
             application/json:
@@ -196,16 +196,14 @@ App\Entity\User:
                   newPassword:
                     type: string
                     required: true
-        responses:
-          200:
-            description: OK
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/User:jsonld-user_read'
   properties:
     groups:
       subresource:
         resourceClass: App\Entity\Group
+        collection: true
+        maxDepth: 1
+    categories:
+      subresource:
+        resourceClass: App\Entity\Category
         collection: true
         maxDepth: 1

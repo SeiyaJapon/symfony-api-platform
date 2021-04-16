@@ -52,7 +52,7 @@ App\Entity\Group:
       controller: App\Api\Action\Group\AcceptRequest
       deserialize: false
       openapi_context:
-        summary: Add user to group
+        summary: Add a user to a group
         requestBody:
           content:
             application/json:
@@ -81,7 +81,7 @@ App\Entity\Group:
       controller: App\Api\Action\Group\RemoveUser
       deserialize: false
       openapi_context:
-        summary: Remove user from group
+        summary: Remove a user from a group
         requestBody:
           content:
             application/json:
@@ -105,5 +105,10 @@ App\Entity\Group:
     users:
       subresource:
         resourceClass: App\Entity\User
+        collection: true
+        maxDepth: 1
+    categories:
+      subresource:
+        resourceClass: App\Entity\Category
         collection: true
         maxDepth: 1
