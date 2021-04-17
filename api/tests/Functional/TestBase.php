@@ -69,7 +69,7 @@ class TestBase extends WebTestCase
     protected function getPeterId()
     {
         return $this->initDbConnection()->executeQuery('SELECT id FROM user WHERE email = "peter@api.com"')->fetchOne();
-        // return $this->initDbConnection()->query('SELECT id FROM user WHERE email = "peter@api.com"')->fetchColumn(0);
+        // return $this->initDbConnection()->executeQuery('SELECT id FROM user WHERE email = "peter@api.com"')->fetchOne();
     }
 
     /**
@@ -89,7 +89,7 @@ class TestBase extends WebTestCase
      */
     protected function getPeterExpenseCategoryId()
     {
-        return $this->initDbConnection()->query('SELECT id FROM category WHERE name = "Peter Expense Category"')->fetchColumn(0);
+        return $this->initDbConnection()->executeQuery('SELECT id FROM category WHERE name = "Peter Expense Category"')->fetchOne();
     }
 
     /**
@@ -99,7 +99,27 @@ class TestBase extends WebTestCase
      */
     protected function getPeterGroupExpenseCategoryId()
     {
-        return $this->initDbConnection()->query('SELECT id FROM category WHERE name = "Peter Group Expense Category"')->fetchColumn(0);
+        return $this->initDbConnection()->executeQuery('SELECT id FROM category WHERE name = "Peter Group Expense Category"')->fetchOne();
+    }
+
+    /**
+     * @return false|mixed
+     *
+     * @throws DBALException
+     */
+    protected function getPeterMovementId()
+    {
+        return $this->initDbConnection()->executeQuery('SELECT id FROM movement WHERE amount = 100')->fetchOne();
+    }
+
+    /**
+     * @return false|mixed
+     *
+     * @throws DBALException
+     */
+    protected function getPeterGroupMovementId()
+    {
+        return $this->initDbConnection()->executeQuery('SELECT id FROM movement WHERE amount = 1000')->fetchOne();
     }
 
     /**
@@ -110,7 +130,7 @@ class TestBase extends WebTestCase
     protected function getManoloId()
     {
         return $this->initDbConnection()->executeQuery('SELECT id FROM user WHERE email = "manolo@api.com"')->fetchOne();
-        // return $this->initDbConnection()->query('SELECT id FROM user WHERE email = "manolo@api.com"')->fetchColumn(0);
+        // return $this->initDbConnection()->executeQuery('SELECT id FROM user WHERE email = "manolo@api.com"')->fetchOne();
     }
 
     /**
@@ -130,7 +150,7 @@ class TestBase extends WebTestCase
      */
     protected function getManoloExpenseCategoryId()
     {
-        return $this->initDbConnection()->query('SELECT id FROM category WHERE name = "Manolo Expense Category"')->fetchColumn(0);
+        return $this->initDbConnection()->executeQuery('SELECT id FROM category WHERE name = "Manolo Expense Category"')->fetchOne();
     }
 
     /**
@@ -140,7 +160,27 @@ class TestBase extends WebTestCase
      */
     protected function getManoloGroupExpenseCategoryId()
     {
-        return $this->initDbConnection()->query('SELECT id FROM category WHERE name = "Manolo Group Expense Category"')->fetchColumn(0);
+        return $this->initDbConnection()->executeQuery('SELECT id FROM category WHERE name = "Manolo Group Expense Category"')->fetchOne();
+    }
+
+    /**
+     * @return false|mixed
+     *
+     * @throws DBALException
+     */
+    protected function getManoloMovementId()
+    {
+        return $this->initDbConnection()->executeQuery('SELECT id FROM movement WHERE amount = 200')->fetchOne();
+    }
+
+    /**
+     * @return false|mixed
+     *
+     * @throws DBALException
+     */
+    protected function getManoloGroupMovementId()
+    {
+        return $this->initDbConnection()->executeQuery('SELECT id FROM movement WHERE amount = 2000')->fetchOne();
     }
 
     private function createAuthenticateUser(KernelBrowser &$client, string $email): void

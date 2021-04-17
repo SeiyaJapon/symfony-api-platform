@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInter
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use App\Entity\Category;
 use App\Entity\Group;
+use App\Entity\Movement;
 use App\Entity\User;
 use App\Exception\Group\GroupNotFoundException;
 use App\Repository\GroupRepository;
@@ -62,7 +63,7 @@ class CurrentUserExtension implements QueryCollectionExtensionInterface
             }
         }
 
-        if (Category::class === $resourceClass) {
+        if (in_array($resourceClass, [Category::class, Movement::class])) {
             $parameterId = $paremeterValue;
 
             if ($this->isGroupAndIsUserMember($parameterId, $user)) {
@@ -87,6 +88,9 @@ class CurrentUserExtension implements QueryCollectionExtensionInterface
 
     private function getResources(): array
     {
-        return [Category::class => 'owner'];
+        return [
+            Category::class => 'owner',
+            Movement::class => 'owner'
+        ];
     }
 }

@@ -1,0 +1,145 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests\Functional\Movement;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+use SymfonyComponentHttpFoundationJsonResponse;
+
+class CreateMovementTest extends MovementTestBase
+{
+    public function testCreateMovement(): void
+    {
+        $payload = [
+            'category' => sprintf('/api/v1/categories/%s', $this->getPeterExpenseCategoryId()),
+            'owner' => sprintf('/api/v1/users/%s', $this->getPeterId()),
+            'amount' => 120.50,
+        ];
+
+        self::$peter->request('POST', $this->endpoint, [], [], [], json_encode($payload));
+
+        $response = self::$peter->getResponse();
+        $responseData = $this->getResponseData($response);
+
+        $this->assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
+        $this->assertEquals($payload['category'], $responseData['category']);
+        $this->assertEquals($payload['owner'], $responseData['owner']);
+        $this->assertEquals($payload['amount'], $responseData['amount']);
+        $this->assertNull($responseData['group']);
+    }
+
+    public function testCreateMovementWithAnotherUserCategory(): void
+    {
+        $payload = [
+            'category' => sprintf('/api/v1/categories/%s', $this->getManoloExpenseCategoryId()),
+            'owner' => sprintf('/api/v1/users/%s', $this->getPeterId()),
+            'amount' => 120.50,
+        ];
+
+        self::$peter->request('POST', $this->endpoint, [], [], [], json_encode($payload));
+
+        $response = self::$peter->getResponse();
+
+        $this->assertEquals(JsonResponse::HTTP_FORBIDDEN, $response->getStatusCode());
+    }
+
+    public function testCreateMovementForAnotherUser(): void
+    {
+        $payload = [
+            'category' => sprintf('/api/v1/categories/%s', $this->getPeterExpenseCategoryId()),
+            'owner' => sprintf('/api/v1/users/%s', $this->getManoloId()),
+            'amount' => 120.50,
+        ];
+
+        self::$peter->request('POST', $this->endpoint, [], [], [], json_encode($payload));
+
+        $response = self::$peter->getResponse();
+
+        $this->assertEquals(JsonResponse::HTTP_FORBIDDEN, $response->getStatusCode());
+    }
+
+    public function testCreateMovementWithInvalidAmount(): void
+    {
+        $payload = [
+            'category' => sprintf('/api/v1/categories/%s', $this->getPeterExpenseCategoryId()),
+            'owner' => sprintf('/api/v1/users/%s', $this->getPeterId()),
+            'amount' => 'abc',
+        ];
+
+        self::$peter->request('POST', $this->endpoint, [], [], [], json_encode($payload));
+
+        $response = self::$peter->getResponse();
+
+        $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $response->getStatusCode());
+    }
+
+    public function testCreateGroupMovement(): void
+    {
+        $payload = [
+            'category' => sprintf('/api/v1/categories/%s', $this->getPeterGroupExpenseCategoryId()),
+            'owner' => sprintf('/api/v1/users/%s', $this->getPeterId()),
+            'group' => sprintf('/api/v1/groups/%s', $this->getPeterGroupId()),
+            'amount' => 300,
+        ];
+
+        self::$peter->request('POST', $this->endpoint, [], [], [], json_encode($payload));
+
+        $response = self::$peter->getResponse();
+        $responseData = $this->getResponseData($response);
+
+        $this->assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
+        $this->assertEquals($payload['category'], $responseData['category']);
+        $this->assertEquals($payload['owner'], $responseData['owner']);
+        $this->assertEquals($payload['amount'], $responseData['amount']);
+        $this->assertEquals($payload['group'], $responseData['group']);
+    }
+
+    public function testCreateMovementToAnotherGroup(): void
+    {
+        $payload = [
+            'category' => sprintf('/api/v1/categories/%s', $this->getPeterGroupExpenseCategoryId()),
+            'owner' => sprintf('/api/v1/users/%s', $this->getPeterId()),
+            'group' => sprintf('/api/v1/groups/%s', $this->getManoloGroupId()),
+            'amount' => 300,
+        ];
+
+        self::$peter->request('POST', $this->endpoint, [], [], [], json_encode($payload));
+
+        $response = self::$peter->getResponse();
+
+        $this->assertEquals(JsonResponse::HTTP_FORBIDDEN, $response->getStatusCode());
+    }
+
+    public function testCreateGroupMovementWithUserCategory(): void
+    {
+        $payload = [
+            'category' => sprintf('/api/v1/categories/%s', $this->getPeterExpenseCategoryId()),
+            'owner' => sprintf('/api/v1/users/%s', $this->getPeterId()),
+            'group' => sprintf('/api/v1/groups/%s', $this->getPeterGroupId()),
+            'amount' => 300,
+        ];
+
+        self::$peter->request('POST', $this->endpoint, [], [], [], json_encode($payload));
+
+        $response = self::$peter->getResponse();
+
+        $this->assertEquals(JsonResponse::HTTP_FORBIDDEN, $response->getStatusCode());
+    }
+
+    public function testCreateGroupMovementWithAnotherGroupCategory(): void
+    {
+        $payload = [
+            'category' => sprintf('/api/v1/categories/%s', $this->getManoloGroupExpenseCategoryId()),
+            'owner' => sprintf('/api/v1/users/%s', $this->getPeterId()),
+            'group' => sprintf('/api/v1/groups/%s', $this->getPeterGroupId()),
+            'amount' => 300,
+        ];
+
+        self::$peter->request('POST', $this->endpoint, [], [], [], json_encode($payload));
+
+        $response = self::$peter->getResponse();
+
+        $this->assertEquals(JsonResponse::HTTP_FORBIDDEN, $response->getStatusCode());
+    }
+}

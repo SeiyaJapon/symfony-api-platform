@@ -18,6 +18,7 @@ class Group
     private DateTime $updatedAt;
     private Collection $users;
     private Collection $categories;
+    private Collection $movements;
 
     /**
      * Group constructor.
@@ -35,6 +36,7 @@ class Group
         $this->users = new ArrayCollection([$owner]);
         $owner->addGroup($this);
         $this->categories = new ArrayCollection();
+        $this->movements = new ArrayCollection();
     }
 
     /**
@@ -128,5 +130,13 @@ class Group
     public function getCategories(): Collection
     {
         return $this->categories;
+    }
+
+    /**
+     * @return Collection|Movement[]
+     */
+    public function getMovements(): Collection
+    {
+        return $this->movements;
     }
 }
