@@ -1,30 +1,32 @@
-parameters:
+imports:
+    - { resource: api_platform/filters/search-filter.yaml }
+    - { resource: api_platform/filters/boolean-filter.yaml }
+    - { resource: api_platform/filters/exist-filter.yaml }
+    - { resource: api_platform/filters/order-filter.yaml }
+    - { resource: api_platform/filters/numeric-filter.yaml }
+    - { resource: api_platform/filters/range-filter.yaml }
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
         bind:
-            $mediaPath: '%env(resolve:SUBDOMAIN)%'
-            $facebookClientId: '%env(resolve:FACEBOOK_CLIENT)%'
-            $facebookSecret: '%env(resolve:FACEBOOK_SECRET)%'
+            $mediaPath:            '%env(resolve:SUBDOMAIN)%'
+            $facebookClientId:     '%env(resolve:FACEBOOK_CLIENT)%'
+            $facebookSecret:       '%env(resolve:FACEBOOK_SECRET)%'
             $facebookGraphVersion: '%env(resolve:FACEBOOK_GRAPH_VERSION)%'
 
     App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
     App\Api\Action\:
-        resource: '../src/Api/Action/'
+        resource: '../src/Api/Action'
         tags: ['controller.service_arguments']
 
-    App\Api\Listener\JsonExceptionResponseTransformerListerer:
+    App\Api\Listener\JsonExceptionResponseTransformerListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 100  }
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 100 }
 
     App\Api\Listener\JWTCreatedListener:
         tags:
@@ -38,7 +40,24 @@ services:
               endpoint: '%env(resolve:ENDPOINT)%'
               credentials:
                   key: '%env(resolve:KEY)%'
-                  secret: '%env(resolve:SUBDOMAIN)%'
+                  secret: '%env(resolve:SECRET)%'
+
+    ###> API Platform filters ###
+    ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter:
+        tags: [ 'api_platform.filter' ]
+
+    ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter:
+        tags: [ 'api_platform.filter' ]
+
+    ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter:
+        tags: [ 'api_platform.filter' ]
+
+    ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter:
+        tags: [ 'api_platform.filter' ]
+
+    ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter:
+        tags: [ 'api_platform.filter' ]
+    ###< API Platform filters ###
 
     _instanceof:
         App\Api\Listener\PreWriteListener\PreWriteListener:
